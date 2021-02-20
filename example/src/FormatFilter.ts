@@ -41,25 +41,24 @@ const CAMERA_VIEW_SIZE: Size = {
   width: SCREEN_WIDTH,
   height: SCREEN_HEIGHT,
 };
+const CAMERA_VIEW_PIXELS = CAMERA_VIEW_SIZE.width * CAMERA_VIEW_SIZE.height;
 
 const applyScaledMask = (
-  clippedElementDimensions: Size, // 2376 x 4224 (1.7777 aka 16:9)
-  maskDimensions: Size, //            375 x 821  (2.1893 aka 19:9)
+  clippedElementDimensions: Size, // 12 x 12
+  maskDimensions: Size, //            6 x 12
 ): Size => {
-  const wScale = maskDimensions.width / clippedElementDimensions.width; //   0.157
-  const hScale = maskDimensions.height / clippedElementDimensions.height; // 0.194
+  const wScale = maskDimensions.width / clippedElementDimensions.width; //   0.5
+  const hScale = maskDimensions.height / clippedElementDimensions.height; // 1.0
 
-  if (wScale < hScale) {
-    // aspect ratio of mask has longer height
+  if (wScale > hScale) {
     return {
-      width: clippedElementDimensions.width * (1 + hScale),
-      height: clippedElementDimensions.height * (1 + hScale),
+      width: maskDimensions.width / hScale,
+      height: maskDimensions.height / hScale,
     };
   } else {
-    // aspect ratio of mask has longer width
     return {
-      width: clippedElementDimensions.width * (1 + wScale),
-      height: clippedElementDimensions.height * (1 + wScale),
+      width: maskDimensions.width / wScale,
+      height: maskDimensions.height / wScale,
     };
   }
 };
@@ -103,51 +102,36 @@ export const compareFormats = (left: CameraDeviceFormat, right: CameraDeviceForm
   if (leftPhotoPixels > rightPhotoPixels) leftPoints += 5;
   if (rightPhotoPixels > leftPhotoPixels) rightPoints += 5;
 
-  if (left.videoHeight != null && left.videoWidth != null && right.videoHeight != null && right.videoWidth != null) {
-    const leftVideoPixels = left.videoWidth * left.videoHeight ?? 0;
-    const rightVideoPixels = right.videoWidth * right.videoHeight ?? 0;
-    if (leftVideoPixels > rightVideoPixels) leftPoints += 3;
-    if (rightVideoPixels > leftVideoPixels) rightPoints += 3;
-  }
+  // if (left.videoHeight != null && left.videoWidth != null && right.videoHeight != null && right.videoWidth != null) {
+  //   const leftVideoPixels = left.videoWidth * left.videoHeight ?? 0;
+  //   const rightVideoPixels = right.videoWidth * right.videoHeight ?? 0;
+  //   if (leftVideoPixels > rightVideoPixels) leftPoints += 3;
+  //   if (rightVideoPixels > leftVideoPixels) rightPoints += 3;
+  // }
 
-  const leftScaled = applyScaledMask(
+  const leftDownscaled = applyScaledMask(
+    CAMERA_VIEW_SIZE,
     { width: left.photoHeight, height: left.photoWidth }, // cameras are horizontal, we rotate to portrait
-    CAMERA_VIEW_SIZE,
   );
-  const rightScaled = applyScaledMask(
+  const rightDownscaled = applyScaledMask(
+    CAMERA_VIEW_SIZE,
     { width: right.photoHeight, height: right.photoWidth }, // cameras are horizontal, we rotate to portrait
-    CAMERA_VIEW_SIZE,
   );
-  const leftOverflow = leftScaled.width * leftScaled.height - left.photoWidth * left.photoHeight;
-  console.log(
-    `Screen: ${JSON.stringify(CAMERA_VIEW_SIZE)} | Cam ${JSON.stringify({
-      width: left.photoHeight,
-      height: left.photoWidth,
-    })} | Scaled ${JSON.stringify({
-      width: Math.round(leftScaled.width),
-      height: Math.round(leftScaled.height),
-    })} | Overflow ${Math.round(leftOverflow)}`,
-  );
-  const rightOverflow = rightScaled.width * rightScaled.height - right.photoWidth * right.photoHeight;
-  if (leftOverflow > rightOverflow) {
-    // left has a higher overflow, aka more pixels that aren't on-screen and therefore wasted. Maybe left is 4:3 and right is 16:9
-    leftPoints -= 3;
-  }
-  if (rightOverflow > leftOverflow) {
-    // right has a higher overflow, aka more pixels that aren't on-screen and therefore wasted. Maybe right is 4:3 and left is 16:9
-    rightPoints -= 3;
-  }
+  const leftOverflow = leftDownscaled.width * leftDownscaled.height - CAMERA_VIEW_PIXELS;
+  const rightOverflow = rightDownscaled.width * rightDownscaled.height - CAMERA_VIEW_PIXELS;
+  if (leftOverflow < rightOverflow) leftPoints += 3;
+  if (rightOverflow < leftOverflow) rightPoints += 3;
 
-  const leftVideoStabilizationPoints = getVideoStabilizationPoints(left.videoStabilizationModes);
-  const rightVideoStabilizationPoints = getVideoStabilizationPoints(right.videoStabilizationModes);
-  if (leftVideoStabilizationPoints > rightVideoStabilizationPoints) leftPoints += 2;
-  if (rightVideoStabilizationPoints > leftVideoStabilizationPoints) rightPoints += 2;
+  // const leftVideoStabilizationPoints = getVideoStabilizationPoints(left.videoStabilizationModes);
+  // const rightVideoStabilizationPoints = getVideoStabilizationPoints(right.videoStabilizationModes);
+  // if (leftVideoStabilizationPoints > rightVideoStabilizationPoints) leftPoints += 2;
+  // if (rightVideoStabilizationPoints > leftVideoStabilizationPoints) rightPoints += 2;
 
-  if (left.supportsVideoHDR) leftPoints += 1;
-  if (right.supportsVideoHDR) rightPoints += 1;
+  // if (left.supportsVideoHDR) leftPoints += 1;
+  // if (right.supportsVideoHDR) rightPoints += 1;
 
-  if (left.supportsPhotoHDR) leftPoints += 1;
-  if (right.supportsPhotoHDR) rightPoints += 1;
+  // if (left.supportsPhotoHDR) leftPoints += 1;
+  // if (right.supportsPhotoHDR) rightPoints += 1;
 
   return rightPoints - leftPoints;
 };
