@@ -12,7 +12,7 @@ import { Navigation, NavigationFunctionComponent } from 'react-native-navigation
 import type { CameraDevice, CameraDeviceFormat, CameraProps, CameraRuntimeError, PhotoFile, VideoFile } from 'react-native-vision-camera';
 import { Camera } from 'react-native-vision-camera';
 import { useIsScreenFocused } from './hooks/useIsScreenFocused';
-import { compareFormats, frameRateIncluded, formatWithClosestMatchingFps, compareDevices } from './FormatFilter';
+import { compareFormats, frameRateIncluded, compareDevices } from './FormatFilter';
 import { CONTENT_SPACING, MAX_ZOOM_FACTOR, SAFE_AREA_PADDING } from './Constants';
 import Reanimated, { Extrapolate, interpolate, useAnimatedGestureHandler, useAnimatedProps, useSharedValue } from 'react-native-reanimated';
 import { useEffect } from 'react';
@@ -94,7 +94,8 @@ export const App: NavigationFunctionComponent = ({ componentId }) => {
       result = result.filter((f) => f.supportsVideoHDR);
     }
 
-    return formatWithClosestMatchingFps(result, fps);
+    // find the first format that includes the given FPS
+    return result.find((f) => f.frameRateRanges.some((r) => frameRateIncluded(r, fps)));
   }, [formats, fps, enableHdr]);
 
   //#region Animated Zoom
