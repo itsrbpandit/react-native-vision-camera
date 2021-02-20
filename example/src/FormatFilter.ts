@@ -53,12 +53,12 @@ const applyScaledMask = (
     // aspect ratio of mask has longer height
     return {
       width: clippedElementDimensions.width * (1 + hScale),
-      height: clippedElementDimensions.height,
+      height: clippedElementDimensions.height * (1 + hScale),
     };
   } else {
     // aspect ratio of mask has longer width
     return {
-      width: clippedElementDimensions.width,
+      width: clippedElementDimensions.width * (1 + wScale),
       height: clippedElementDimensions.height * (1 + wScale),
     };
   }
