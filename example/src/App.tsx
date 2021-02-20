@@ -10,9 +10,8 @@ import {
 } from 'react-native-gesture-handler';
 import { Navigation, NavigationFunctionComponent } from 'react-native-navigation';
 import type { CameraDevice, CameraDeviceFormat, CameraProps, CameraRuntimeError, PhotoFile, VideoFile } from 'react-native-vision-camera';
-import { Camera } from 'react-native-vision-camera';
+import { Camera, frameRateIncluded, sortDevices, sortFormatsByResolution, filterFormatsByAspectRatio } from 'react-native-vision-camera';
 import { useIsScreenFocused } from './hooks/useIsScreenFocused';
-import { frameRateIncluded, compareDevices, sortFormatByResolution, filterFormatsByAspectRatio } from './FormatFilter';
 import { CONTENT_SPACING, MAX_ZOOM_FACTOR, SAFE_AREA_PADDING } from './Constants';
 import Reanimated, { Extrapolate, interpolate, useAnimatedGestureHandler, useAnimatedProps, useSharedValue } from 'react-native-reanimated';
 import { useEffect } from 'react';
@@ -55,7 +54,7 @@ export const App: NavigationFunctionComponent = ({ componentId }) => {
   const formats = useMemo<CameraDeviceFormat[]>(() => {
     if (device?.formats == null) return [];
     const filtered = filterFormatsByAspectRatio(device.formats);
-    return filtered.sort(sortFormatByResolution);
+    return filtered.sort(sortFormatsByResolution);
   }, [device?.formats]);
 
   //#region Memos
@@ -185,7 +184,7 @@ export const App: NavigationFunctionComponent = ({ componentId }) => {
       try {
         const availableCameraDevices = await Camera.getAvailableCameraDevices();
         console.log(`Devices: ${availableCameraDevices.map((d) => d.name).join(', ')}`);
-        const sortedDevices = availableCameraDevices.sort(compareDevices);
+        const sortedDevices = availableCameraDevices.sort(sortDevices);
         console.debug(`Devices (sorted): ${sortedDevices.map((d) => d.name).join(', ')}`);
         setDevices(sortedDevices);
       } catch (e) {
