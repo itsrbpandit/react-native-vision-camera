@@ -1,5 +1,5 @@
 import { SCREEN_HEIGHT, SCREEN_WIDTH, USE_ULTRAWIDE_IF_AVAILABLE } from './Constants';
-import type { CameraDevice, CameraDeviceFormat, FrameRateRange, VideoStabilizationMode } from 'react-native-vision-camera';
+import type { CameraDevice, CameraDeviceFormat, FrameRateRange } from 'react-native-vision-camera';
 
 /**
  * Compares two devices with the following criteria:
@@ -63,76 +63,35 @@ const applyScaledMask = (
   }
 };
 
-const videoStabilizationModesPointRanking: Record<VideoStabilizationMode, number> = {
-  'cinematic-extended': 3,
-  cinematic: 2,
-  standard: 1,
-  auto: 1,
-  off: 0,
+const getFormatAspectRatioOverflow = (format: CameraDeviceFormat): number => {
+  const downscaled = applyScaledMask(
+    CAMERA_VIEW_SIZE,
+    // cameras are landscape, so we intentionally rotate
+    { width: format.photoHeight, height: format.photoWidth },
+  );
+  return downscaled.width * downscaled.height - CAMERA_VIEW_PIXELS;
 };
 
-const getVideoStabilizationPoints = (videoStabilizationModes: VideoStabilizationMode[]): number =>
-  videoStabilizationModes.reduce((prev, curr) => {
-    return prev + videoStabilizationModesPointRanking[curr];
-  }, 0);
+export const filterFormatsByAspectRatio = (formats: CameraDeviceFormat[]): CameraDeviceFormat[] => {
+  const minOverflow = formats.reduce((prev, curr) => {
+    const overflow = getFormatAspectRatioOverflow(curr);
+    if (overflow < prev) return overflow;
+    else return prev;
+  }, Number.MAX_SAFE_INTEGER);
 
-/**
- * Compares two Formats with the following comparators:
- * * Photo Dimensions (higher is better) (weights x3)
- * * Video Dimensions (higher is better) (weights x2)
- * * Max FPS (higher is better) (weights x2)
- * * HDR Support (true is better) (weights x2)
- * * Max Zoom Factor (higher is better) (weights x1)
- * * MaxISO (higher is better) (weights x1)
- * * MinISO (lower is better) (weights x1)
- *
- * @returns
- * * `-1` if left is BETTER than right
- * * `0` if left equals right
- * * `1` if left is WORSE than right
- *
- * Note that this makes the `sort()` function descending, so the first element (`[0]`) is the "best" format.
- */
-export const compareFormats = (left: CameraDeviceFormat, right: CameraDeviceFormat): number => {
-  let leftPoints = 0;
-  let rightPoints = 0;
+  return formats.filter((f) => getFormatAspectRatioOverflow(f) === minOverflow);
+};
 
-  const leftPhotoPixels = left.photoHeight * left.photoWidth;
-  const rightPhotoPixels = right.photoHeight * right.photoWidth;
-  if (leftPhotoPixels > rightPhotoPixels) leftPoints += 5;
-  if (rightPhotoPixels > leftPhotoPixels) rightPoints += 5;
+export const sortFormatByResolution = (left: CameraDeviceFormat, right: CameraDeviceFormat): number => {
+  let leftPoints = left.photoHeight * left.photoWidth;
+  let rightPoints = right.photoHeight * right.photoWidth;
 
-  // if (left.videoHeight != null && left.videoWidth != null && right.videoHeight != null && right.videoWidth != null) {
-  //   const leftVideoPixels = left.videoWidth * left.videoHeight ?? 0;
-  //   const rightVideoPixels = right.videoWidth * right.videoHeight ?? 0;
-  //   if (leftVideoPixels > rightVideoPixels) leftPoints += 3;
-  //   if (rightVideoPixels > leftVideoPixels) rightPoints += 3;
-  // }
+  if (left.videoHeight != null && left.videoWidth != null && right.videoHeight != null && right.videoWidth != null) {
+    leftPoints += left.videoWidth * left.videoHeight ?? 0;
+    rightPoints += right.videoWidth * right.videoHeight ?? 0;
+  }
 
-  const leftDownscaled = applyScaledMask(
-    CAMERA_VIEW_SIZE,
-    { width: left.photoHeight, height: left.photoWidth }, // cameras are horizontal, we rotate to portrait
-  );
-  const rightDownscaled = applyScaledMask(
-    CAMERA_VIEW_SIZE,
-    { width: right.photoHeight, height: right.photoWidth }, // cameras are horizontal, we rotate to portrait
-  );
-  const leftOverflow = leftDownscaled.width * leftDownscaled.height - CAMERA_VIEW_PIXELS;
-  const rightOverflow = rightDownscaled.width * rightDownscaled.height - CAMERA_VIEW_PIXELS;
-  if (leftOverflow < rightOverflow) leftPoints += 3;
-  if (rightOverflow < leftOverflow) rightPoints += 3;
-
-  // const leftVideoStabilizationPoints = getVideoStabilizationPoints(left.videoStabilizationModes);
-  // const rightVideoStabilizationPoints = getVideoStabilizationPoints(right.videoStabilizationModes);
-  // if (leftVideoStabilizationPoints > rightVideoStabilizationPoints) leftPoints += 2;
-  // if (rightVideoStabilizationPoints > leftVideoStabilizationPoints) rightPoints += 2;
-
-  // if (left.supportsVideoHDR) leftPoints += 1;
-  // if (right.supportsVideoHDR) rightPoints += 1;
-
-  // if (left.supportsPhotoHDR) leftPoints += 1;
-  // if (right.supportsPhotoHDR) rightPoints += 1;
-
+  // "returns a negative value if left is better than one"
   return rightPoints - leftPoints;
 };
 
