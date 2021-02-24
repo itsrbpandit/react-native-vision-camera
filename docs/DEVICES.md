@@ -1,6 +1,7 @@
 <table>
 <tr>
 <th><a href="../README.md">README</a></th>
+<th><a href="./SETUP.md">SETUP</a></th>
 <th>DEVICES</th>
 <th><a href="./FORMATS.md">FORMATS</a></th>
 <th><a href="./FRAME_PROCESSORS.md">FRAME_PROCESSORS</a></th>
@@ -21,11 +22,11 @@
 
 Camera devices are the physical (or "virtual") devices that can be used to record videos or capture photos.
 
-* **Physical**: A physical camera device is a camera lens on your phone. Different physical camera devices have different specifications, such as different capture formats, field of views, focal lengths, and more. Some phones have multiple physical camera devices.
+* **Physical**: A physical camera device is a **camera lens on your phone**. Different physical camera devices have different specifications, such as different capture formats, field of views, focal lengths, and more. Some phones have multiple physical camera devices.
 
   > Examples: _"Backside Wide-Angle Camera"_, _"Frontside Wide-Angle Camera (FaceTime HD)"_, _"Ultra-Wide-Angle back camera"_.
 
-* **Virtual**: A virtual camera device is a combination of multiple physical camera devices, and provides features such as _virtual-device-switchover_ while zooming, and _combined photo delivery_ from all physiscal cameras to produce higher quality images.
+* **Virtual**: A virtual camera device is a **combination of one or more physical camera devices**, and provides features such as _virtual-device-switchover_ while zooming or _combined photo delivery_ from all physiscal cameras to produce higher quality images.
 
   > Examples: _"Triple-Camera"_, _"Dual-Wide-Angle Camera"_
 
@@ -123,3 +124,8 @@ function App() {
 ```
 
 > Note: If you don't care about fast resume times you can also fully unmount the `<Camera>` view instead, which will use a lot less memory (RAM).
+
+
+<br />
+
+#### 🚀 Next section: [FORMATS](./FORMATS.md)

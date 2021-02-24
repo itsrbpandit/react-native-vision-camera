@@ -1,6 +1,7 @@
 <table>
 <tr>
 <th><a href="../README.md">README</a></th>
+<th><a href="./SETUP.md">SETUP</a></th>
 <th><a href="./DEVICES.md">DEVICES</a></th>
 <th><a href="./FORMATS.md">FORMATS</a></th>
 <th>FRAME_PROCESSORS</th>
@@ -59,3 +60,8 @@ function App() {
 ```
 
 > FRAME PROCESSORS ARE STILL WIP
+
+
+<br />
+
+#### 🚀 Next section: [ANIMATED](./ANIMATED.md)

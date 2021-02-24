@@ -1,6 +1,7 @@
 <table>
 <tr>
 <th><a href="../README.md">README</a></th>
+<th><a href="./SETUP.md">SETUP</a></th>
 <th><a href="./DEVICES.md">DEVICES</a></th>
 <th><a href="./FORMATS.md">FORMATS</a></th>
 <th><a href="./FRAME_PROCESSORS.md">FRAME_PROCESSORS</a></th>
@@ -74,3 +75,8 @@ export function App() {
 3. Using [`useSharedValue`](https://docs.swmansion.com/react-native-reanimated/docs/api/useSharedValue), we're creating a shared value that holds the `zoom` property.
 4. Using the [`useAnimatedProps`](https://docs.swmansion.com/react-native-reanimated/docs/api/useAnimatedProps) hook, we apply the shared value to the animated props.
 5. We apply the animated props to the `ReanimatedCamera` component's `animatedProps` property.
+
+
+<br />
+
+#### 🚀 Next section: [ERRORS](./ERRORS.md)

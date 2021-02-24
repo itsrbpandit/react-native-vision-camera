@@ -1,6 +1,7 @@
 <table>
 <tr>
 <th>README</th>
+<th><a href="./docs/SETUP.md">SETUP</a></th>
 <th><a href="./docs/DEVICES.md">DEVICES</a></th>
 <th><a href="./docs/FORMATS.md">FORMATS</a></th>
 <th><a href="./docs/FRAME_PROCESSORS.md">FRAME_PROCESSORS</a></th>
@@ -14,7 +15,7 @@
 <h1 align="center">Camera</h1>
 
 <div align="center">
-  <img src="img/11.png" width="55%">
+  <img src="img/11.png" width="50%">
   <br />
   <br />
   <blockquote><h4>📸 The Camera library that sees the vision.</h4></blockquote>
@@ -68,3 +69,7 @@ function App() {
   )
 }
 ```
+
+<br />
+
+#### 🚀 Get started by [setting up permissions](./docs/SETUP.md)!
