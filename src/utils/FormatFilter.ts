@@ -21,8 +21,8 @@ export const sortDevices = (left: CameraDevice, right: CameraDevice): number => 
   if (leftHasWideAngle) leftPoints += 5;
   if (rightHasWideAngle) rightPoints += 5;
 
-  if (left.devices.length > right.devices.length) leftPoints += 3;
-  if (right.devices.length > left.devices.length) rightPoints += 3;
+  if (left.devices.length > right.devices.length) leftPoints += 2;
+  if (right.devices.length > left.devices.length) rightPoints += 2;
 
   return rightPoints - leftPoints;
 };
@@ -91,8 +91,8 @@ export const sortFormatsByResolution = (left: CameraDeviceFormat, right: CameraD
   let rightPoints = right.photoHeight * right.photoWidth;
 
   if (left.videoHeight != null && left.videoWidth != null && right.videoHeight != null && right.videoWidth != null) {
-    leftPoints += left.videoWidth * left.videoHeight ?? 0;
-    rightPoints += right.videoWidth * right.videoHeight ?? 0;
+    leftPoints += left.videoWidth * left.videoHeight;
+    rightPoints += right.videoWidth * right.videoHeight;
   }
 
   // "returns a negative value if left is better than one"

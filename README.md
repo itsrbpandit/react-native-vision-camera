@@ -1,14 +1,17 @@
 <table>
 <tr>
-<th>README.md</th>
-<th><a href="./docs/ANIMATED.md">ANIMATED.md</a></th>
-<th><a href="./docs/DEVICES.md">DEVICES.md</a></th>
-<th><a href="./docs/FORMATS.md">FORMATS.md</a></th>
-<th><a href="./docs/ERRORS.md">ERRORS.md</a></th>
+<th>README</th>
+<th><a href="./docs/DEVICES.md">DEVICES</a></th>
+<th><a href="./docs/FORMATS.md">FORMATS</a></th>
+<th><a href="./docs/FRAME_PROCESSORS.md">FRAME_PROCESSORS</a></th>
+<th><a href="./docs/ANIMATED.md">ANIMATED</a></th>
+<th><a href="./docs/ERRORS.md">ERRORS</a></th>
 </tr>
 </table>
 
-<br />
+<br/>
+
+<h1 align="center">Camera</h1>
 
 <div align="center">
   <img src="img/11.png" width="55%">
@@ -16,15 +19,11 @@
   <br />
   <blockquote><h4>📸 The Camera library that sees the vision.</h4></blockquote>
   <br />
-  <a href='https://ko-fi.com/F1F8CLXG' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi2.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
-  <br />
-  <a href="https://www.npmjs.com/package/react-native-vision-camera"><img src="https://img.shields.io/npm/v/react-native-vision-camera?color=%239ba298"</a>
-  <br />
-  <a href="https://www.npmjs.com/package/react-native-vision-camera"><img src="https://img.shields.io/npm/dt/react-native-vision-camera?color=%239ba298"</a>
-  <br />
-  <a href="https://github.com/mrousavy?tab=followers"><img src="https://img.shields.io/github/followers/mrousavy?label=Follow%20%40mrousavy&style=social"></a>
+  <!-- <a href="https://github.com/mrousavy?tab=followers"><img src="https://img.shields.io/github/followers/mrousavy?label=Follow%20%40mrousavy&style=social"></a>
   <br />
   <a href="https://twitter.com/mrousavy"><img src="https://img.shields.io/twitter/follow/mrousavy?label=Follow%20%40mrousavy&style=social"></a>
+  <br /> -->
+  <a href="https://cuvent.com"><img height=40 src="./img/cuvent-logo-text.svg"></a>
 </div>
 
 <br/>
@@ -57,12 +56,14 @@ npx pod-install
 
 ```tsx
 function App() {
-  const device = useCameraDevice('wide-angle-camera')
+  const devices = useCameraDevices('wide-angle-camera')
+  const device = devices.back
 
   return (
     <Camera
       style={StyleSheet.absoluteFill}
       device={device}
+      isActive={true}
     />
   )
 }

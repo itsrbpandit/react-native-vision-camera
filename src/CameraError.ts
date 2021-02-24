@@ -20,7 +20,7 @@ export type FormatError =
   | 'format/invalid-low-light-boost'
   | 'format/invalid-format'
   | 'format/invalid-preset';
-export type SessionError = 'session/camera-not-ready';
+export type SessionError = 'session/camera-not-ready' | 'session/audio-session-setup-failed';
 export type CaptureError =
   | 'capture/invalid-photo-format'
   | 'capture/encoder-error'
@@ -37,6 +37,20 @@ export type SystemError = 'system/no-camera-manager';
 export type UnknownError = 'unknown/unknown';
 
 export interface ErrorWithCause {
+  /**
+   * The native error's code.
+   *
+   * * iOS: `NSError.code`
+   * * Android: N/A
+   */
+  code?: number;
+  /**
+   * The native error's domain.
+   *
+   * * iOS: `NSError.domain`
+   * * Android: N/A
+   */
+  domain?: string;
   /**
    * The native error description (Localized on iOS)
    *
