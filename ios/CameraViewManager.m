@@ -56,8 +56,7 @@ RCT_EXTERN_METHOD(getAvailablePhotoCodecs:(nonnull NSNumber *)node resolve:(RCTP
 
 - (void)setBridge:(RCTBridge *)bridge
 {
-  installFrameProcessorBindings(bridge);
-  //install(*(jsi::Runtime *)cxxBridge.runtime);
+  [FrameProcessorBindings installFrameProcessorBindings:bridge];
 }
 
 - (void)invalidate {
