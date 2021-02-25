@@ -25,6 +25,7 @@ import UIKit
 // CameraView+TakePhoto
 // TODO: Photo HDR
 
+// swiftlint:disable line_length
 private let propsThatRequireReconfiguration = ["cameraId", "enableDepthData", "enableHighResolutionCapture", "enablePortraitEffectsMatteDelivery", "preset", "onCodeScanned", "scannableCodes"]
 private let propsThatRequireDeviceReconfiguration = ["fps", "hdr", "lowLightBoost", "colorSpace"]
 
@@ -91,6 +92,7 @@ final class CameraView: UIView {
 
   /// Convenience wrapper to get layer as its statically known type.
   var videoPreviewLayer: AVCaptureVideoPreviewLayer {
+    // swiftlint:disable force_cast
     return layer as! AVCaptureVideoPreviewLayer
   }
 

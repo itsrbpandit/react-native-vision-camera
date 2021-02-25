@@ -20,11 +20,24 @@
   <br />
   <blockquote><h4>📸 The Camera library that sees the vision.</h4></blockquote>
   <br />
-  <!-- <a href="https://github.com/mrousavy?tab=followers"><img src="https://img.shields.io/github/followers/mrousavy?label=Follow%20%40mrousavy&style=social"></a>
-  <br />
-  <a href="https://twitter.com/mrousavy"><img src="https://img.shields.io/twitter/follow/mrousavy?label=Follow%20%40mrousavy&style=social"></a>
-  <br /> -->
+
   <a href="https://cuvent.com"><img height=40 src="./img/cuvent-logo-text.svg"></a>
+  <br/>
+  <span>
+    <a align="center" href="https://github.com/mrousavy?tab=followers">
+      <img src="https://img.shields.io/github/followers/mrousavy?label=Follow%20%40mrousavy&style=social" />
+    </a>
+  </span>
+  <br />
+  <span>
+    <a align="center" href="https://twitter.com/mrousavy">
+      <img src="https://img.shields.io/twitter/follow/mrousavy?label=Follow%20%40mrousavy&style=social" />
+    </a>
+    <a align="center" href="https://twitter.com/cuventtech">
+      <img src="https://img.shields.io/twitter/follow/cuventtech?label=Follow%20%40cuventtech&style=social" />
+    </a>
+  </span>
+  </table>
 </div>
 
 <br/>
@@ -37,7 +50,7 @@
 ### Install
 
 ```sh
-npm i react-native-vision-camera
+npm i react-native-vision-camera@alpha
 npx pod-install
 ```
 
