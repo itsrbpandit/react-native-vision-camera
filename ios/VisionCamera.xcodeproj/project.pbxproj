@@ -46,6 +46,7 @@
 		B88751A925E0102000DB86D6 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B887518425E0102000DB86D6 /* CameraView.swift */; };
 		B8E0A94425E82DFD008AE93F /* FrameProcessorBindings.mm in Sources */ = {isa = PBXBuildFile; fileRef = B8E0A94325E82DFD008AE93F /* FrameProcessorBindings.mm */; };
 		B8E0A94825E82E40008AE93F /* FrameProcessorBindings.h in Sources */ = {isa = PBXBuildFile; fileRef = B8E0A94725E82E40008AE93F /* FrameProcessorBindings.h */; };
+		B8E0A9BC25E833D7008AE93F /* YeetJSIUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = B8E0A9BA25E833D7008AE93F /* YeetJSIUtils.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -102,6 +103,8 @@
 		B887518425E0102000DB86D6 /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		B8E0A94325E82DFD008AE93F /* FrameProcessorBindings.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = FrameProcessorBindings.mm; sourceTree = "<group>"; };
 		B8E0A94725E82E40008AE93F /* FrameProcessorBindings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FrameProcessorBindings.h; sourceTree = "<group>"; };
+		B8E0A9BA25E833D7008AE93F /* YeetJSIUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = YeetJSIUtils.mm; sourceTree = "<group>"; };
+		B8E0A9BB25E833D7008AE93F /* YeetJSIUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YeetJSIUtils.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +129,7 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				B8E0A9B925E833C8008AE93F /* JSI Utils */,
 				B8E0A94725E82E40008AE93F /* FrameProcessorBindings.h */,
 				B8E0A94325E82DFD008AE93F /* FrameProcessorBindings.mm */,
 				B887515E25E0102000DB86D6 /* CameraBridge.h */,
@@ -192,6 +196,15 @@
 				B887517F25E0102000DB86D6 /* AVCaptureDevice.Format.AutoFocusSystem+descriptor.swift */,
 			);
 			path = Parsers;
+			sourceTree = "<group>";
+		};
+		B8E0A9B925E833C8008AE93F /* JSI Utils */ = {
+			isa = PBXGroup;
+			children = (
+				B8E0A9BB25E833D7008AE93F /* YeetJSIUtils.h */,
+				B8E0A9BA25E833D7008AE93F /* YeetJSIUtils.mm */,
+			);
+			path = "JSI Utils";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -310,6 +323,7 @@
 				B8E0A94825E82E40008AE93F /* FrameProcessorBindings.h in Sources */,
 				B88751A525E0102000DB86D6 /* CameraView+Focus.swift in Sources */,
 				B887519325E0102000DB86D6 /* CameraView+CodeScanning.swift in Sources */,
+				B8E0A9BC25E833D7008AE93F /* YeetJSIUtils.mm in Sources */,
 				B887519E25E0102000DB86D6 /* AVCapturePhotoOutput.QualityPrioritization+descriptor.swift in Sources */,
 				B887518825E0102000DB86D6 /* VideoCaptureDelegate.swift in Sources */,
 			);
