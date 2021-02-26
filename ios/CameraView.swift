@@ -25,6 +25,7 @@ import UIKit
 // CameraView+TakePhoto
 // TODO: Photo HDR
 
+// swiftlint:disable line_length
 private let propsThatRequireReconfiguration = ["cameraId", "enableDepthData", "enableHighResolutionCapture", "enablePortraitEffectsMatteDelivery", "preset", "frameProcessor"]
 private let propsThatRequireDeviceReconfiguration = ["fps", "hdr", "lowLightBoost", "colorSpace"]
 
@@ -81,13 +82,19 @@ public class CameraView: UIView {
   // CameraView+Zoom
   internal var pinchGestureRecognizer: UIPinchGestureRecognizer?
   internal var pinchScaleOffset: CGFloat = 1.0
-  // CameraView+FrameProcessor
-  @objc public var frameProcessor: (([Any]) -> Void)? {
+
+  // Frame Processing
+  internal weak var frameProcessorDelegate: FrameProcessorDelegate?
+  @objc public var frameProcessor: FrameProcessor? {
     didSet {
       self.didSetProps(["frameProcessor"])
+      if let frameProcessor = self.frameProcessor {
+        self.frameProcessorDelegate = FrameProcessorDelegate(withFrameProcessor: frameProcessor)
+      } else {
+        self.frameProcessorDelegate = nil
+      }
     }
   }
-  internal let frameProcessorQueue = DispatchQueue(label: "com.mrousavy.camera-queue-frame-processor", qos: .userInteractive, attributes: [], autoreleaseFrequency: .inherit, target: nil)
 
   // pragma MARK: Setup
   public override class var layerClass: AnyClass {
@@ -318,18 +325,18 @@ public class CameraView: UIView {
     if videoDeviceInput!.device.position == .front {
         movieOutput!.mirror()
     }
-    
+
     // Frame Processor (also Video Output)
     if let frameProcessorOutput = self.frameProcessorOutput {
       captureSession.removeOutput(frameProcessorOutput)
       self.frameProcessorOutput = nil
     }
-    if self.frameProcessor != nil {
+    if let frameProcessorDelegate = self.frameProcessorDelegate {
       frameProcessorOutput = AVCaptureVideoDataOutput()
       guard captureSession.canAddOutput(frameProcessorOutput!) else {
         return invokeOnError(.parameter(.unsupportedOutput(outputDescriptor: "frame-processor-output")))
       }
-      frameProcessorOutput!.setSampleBufferDelegate(self, queue: self.frameProcessorQueue)
+      frameProcessorOutput!.setSampleBufferDelegate(frameProcessorDelegate, queue: frameProcessorDelegate.queue)
       captureSession.addOutput(frameProcessorOutput!)
     }
 
