@@ -5,7 +5,6 @@ import type { ColorSpace, CameraDeviceFormat, CameraDevice } from './CameraDevic
 import type { ErrorWithCause } from './CameraError';
 import { CameraCaptureError, CameraRuntimeError, tryParseNativeCameraError, isErrorWithCause } from './CameraError';
 import type { CameraPreset } from './CameraPreset';
-import type { CodeType, Code } from './Code';
 import type { Frame } from './FrameProcessor';
 import type { PhotoFile, TakePhotoOptions } from './PhotoFile';
 import type { Point } from './Point';
@@ -50,24 +49,6 @@ type CameraPresetProps = Modify<
     lowLightBoost?: boolean;
     colorSpace?: ColorSpace;
     format?: CameraDeviceFormat;
-  }
->;
-
-type CameraScannerPropsNever = {
-  /**
-   * Specify the code types this camera can scan.
-   */
-  scannableCodes?: never;
-  /**
-   * Called when one or multiple codes have been scanned.
-   */
-  onCodeScanned?: never;
-};
-export type CameraScannerProps = Modify<
-  CameraScannerPropsNever,
-  {
-    scannableCodes: CodeType[];
-    onCodeScanned: (codes: Code[]) => void;
   }
 >;
 
@@ -142,12 +123,7 @@ export type CameraEventProps = {
   frameProcessor?: (frame: Frame) => void;
 };
 
-export type CameraProps = (CameraPresetProps | CameraFormatProps) &
-  (CameraScannerPropsNever | CameraScannerProps) &
-  CameraDeviceProps &
-  CameraDynamicProps &
-  CameraEventProps &
-  ViewProps;
+export type CameraProps = (CameraPresetProps | CameraFormatProps) & CameraDeviceProps & CameraDynamicProps & CameraEventProps & ViewProps;
 
 export type CameraPermissionStatus = 'authorized' | 'not-determined' | 'denied' | 'restricted';
 export type CameraPermissionRequestResult = 'authorized' | 'denied';
@@ -156,9 +132,6 @@ interface OnErrorEvent {
   code: string;
   message: string;
   cause?: ErrorWithCause;
-}
-interface OnCodeScannedEvent {
-  codes: Code[];
 }
 
 //#endregion
@@ -192,7 +165,6 @@ export class Camera extends React.PureComponent<CameraProps, CameraState> {
     this.state = { cameraId: undefined };
     this.onInitialized = this.onInitialized.bind(this);
     this.onError = this.onError.bind(this);
-    this.onCodeScanned = this.onCodeScanned.bind(this);
     this.ref = React.createRef<RefType>();
     this.lastFrameProcessor = undefined;
   }
@@ -416,14 +388,6 @@ export class Camera extends React.PureComponent<CameraProps, CameraState> {
   private onInitialized(): void {
     this.props.onInitialized?.();
   }
-
-  private onCodeScanned(event?: NativeSyntheticEvent<OnCodeScannedEvent>): void {
-    if (event == null) throw new Error('onCodeScanned() was invoked but event was null!');
-
-    if (this.props.onCodeScanned == null)
-      console.warn('Camera: onCodeScanned event was invoked but no listeners attached! Did you forget to remove the `scannableCodes` property?');
-    else this.props.onCodeScanned(event.nativeEvent.codes);
-  }
   //#endregion
 
   static getDerivedStateFromProps(props: CameraProps, state: CameraState): CameraState | null {
@@ -460,8 +424,6 @@ export class Camera extends React.PureComponent<CameraProps, CameraState> {
         onInitialized={this.onInitialized}
         // @ts-expect-error with our callback wrapping we have to extract NativeSyntheticEvent params
         onError={this.onError}
-        // @ts-expect-error with our callback wrapping we have to extract NativeSyntheticEvent params
-        onCodeScanned={this.onCodeScanned}
       />
     );
   }
