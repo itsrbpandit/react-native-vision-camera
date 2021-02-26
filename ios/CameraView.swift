@@ -84,7 +84,7 @@ public class CameraView: UIView {
   internal var pinchScaleOffset: CGFloat = 1.0
 
   // Frame Processing
-  internal weak var frameProcessorDelegate: FrameProcessorDelegate?
+  internal var frameProcessorDelegate: FrameProcessorDelegate?
   @objc public var frameProcessor: FrameProcessor? {
     didSet {
       self.didSetProps(["frameProcessor"])
