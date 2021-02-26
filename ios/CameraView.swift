@@ -29,7 +29,7 @@ import UIKit
 private let propsThatRequireReconfiguration = ["cameraId", "enableDepthData", "enableHighResolutionCapture", "enablePortraitEffectsMatteDelivery", "preset", "frameProcessor"]
 private let propsThatRequireDeviceReconfiguration = ["fps", "hdr", "lowLightBoost", "colorSpace"]
 
-public class CameraView: UIView {
+public final class CameraView: UIView {
   // pragma MARK: Exported Properties
   // props that require reconfiguring
   @objc var cameraId: NSString?
