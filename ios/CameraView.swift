@@ -59,6 +59,8 @@ public class CameraView: UIView {
       }
     }
   }
+  // frame processor (has to be anonymous type)
+  @objc public var frameProcessor: ((Array<Any>) -> Void)?
 
   var isReady: Bool = false
   var isRunning: Bool {
