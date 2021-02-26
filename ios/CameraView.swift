@@ -29,7 +29,7 @@ import UIKit
 private let propsThatRequireReconfiguration = ["cameraId", "enableDepthData", "enableHighResolutionCapture", "enablePortraitEffectsMatteDelivery", "preset", "onCodeScanned", "scannableCodes"]
 private let propsThatRequireDeviceReconfiguration = ["fps", "hdr", "lowLightBoost", "colorSpace"]
 
-final class CameraView: UIView {
+public class CameraView: UIView {
   // pragma MARK: Exported Properties
   // props that require reconfiguring
   @objc var cameraId: NSString?
@@ -86,7 +86,7 @@ final class CameraView: UIView {
   internal var pinchScaleOffset: CGFloat = 1.0
 
   // pragma MARK: Setup
-  override class var layerClass: AnyClass {
+  public override class var layerClass: AnyClass {
     return AVCaptureVideoPreviewLayer.self
   }
 
@@ -114,7 +114,7 @@ final class CameraView: UIView {
                                               object: captureSession)
   }
 
-  override func removeFromSuperview() {
+  public override func removeFromSuperview() {
     captureSession.stopRunning()
     super.removeFromSuperview()
   }
@@ -140,7 +140,7 @@ final class CameraView: UIView {
   }
 
   // pragma MARK: Props updating
-  override final func didSetProps(_ changedProps: [String]!) {
+  public override final func didSetProps(_ changedProps: [String]!) {
     let shouldReconfigure = changedProps.contains { propsThatRequireReconfiguration.contains($0) }
     let shouldReconfigureFormat = shouldReconfigure || changedProps.contains("format")
     let shouldReconfigureDevice = shouldReconfigureFormat || changedProps.contains { propsThatRequireDeviceReconfiguration.contains($0) }

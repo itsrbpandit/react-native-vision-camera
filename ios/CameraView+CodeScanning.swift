@@ -10,7 +10,7 @@ import AVFoundation
 import Foundation
 
 extension CameraView: AVCaptureMetadataOutputObjectsDelegate {
-  func metadataOutput(_: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from _: AVCaptureConnection) {
+  public func metadataOutput(_: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from _: AVCaptureConnection) {
     if metadataObjects.isEmpty {
       return
     }
