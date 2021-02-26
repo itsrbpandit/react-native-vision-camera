@@ -25,7 +25,6 @@ import UIKit
 // CameraView+TakePhoto
 // TODO: Photo HDR
 
-// swiftlint:disable line_length
 private let propsThatRequireReconfiguration = ["cameraId", "enableDepthData", "enableHighResolutionCapture", "enablePortraitEffectsMatteDelivery", "preset"]
 private let propsThatRequireDeviceReconfiguration = ["fps", "hdr", "lowLightBoost", "colorSpace"]
 
@@ -59,8 +58,8 @@ public class CameraView: UIView {
       }
     }
   }
-  // frame processor (has to be anonymous type)
-  @objc public var frameProcessor: ((Array<Any>) -> Void)?
+  // frame processor jsi::Function (converted to objc callback)
+  @objc public var frameProcessor: (([Any]) -> Void)?
 
   var isReady: Bool = false
   var isRunning: Bool {
