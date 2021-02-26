@@ -13,8 +13,4 @@
 #import <React/RCTViewManager.h>
 #import <React/RCTUIManager.h>
 
-@interface CameraBridge: RCTViewManager
-
-@end
-
 #endif /* CameraBridge_h */
