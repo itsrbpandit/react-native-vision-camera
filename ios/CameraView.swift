@@ -26,7 +26,7 @@ import UIKit
 // TODO: Photo HDR
 
 // swiftlint:disable line_length
-private let propsThatRequireReconfiguration = ["cameraId", "enableDepthData", "enableHighResolutionCapture", "enablePortraitEffectsMatteDelivery", "preset", "onCodeScanned", "scannableCodes"]
+private let propsThatRequireReconfiguration = ["cameraId", "enableDepthData", "enableHighResolutionCapture", "enablePortraitEffectsMatteDelivery", "preset"]
 private let propsThatRequireDeviceReconfiguration = ["fps", "hdr", "lowLightBoost", "colorSpace"]
 
 public class CameraView: UIView {
@@ -37,7 +37,6 @@ public class CameraView: UIView {
   @objc var enableHighResolutionCapture: NSNumber? // nullable bool
   @objc var enablePortraitEffectsMatteDelivery = false
   @objc var preset: String?
-  @objc var scannableCodes: [String]?
   // props that require format reconfiguring
   @objc var format: NSDictionary?
   @objc var fps: NSNumber?
@@ -51,7 +50,6 @@ public class CameraView: UIView {
   // events
   @objc var onInitialized: RCTDirectEventBlock?
   @objc var onError: RCTDirectEventBlock?
-  @objc var onCodeScanned: RCTBubblingEventBlock?
   @objc var enableZoomGesture: Bool = false {
     didSet {
       if enableZoomGesture {
@@ -309,34 +307,6 @@ public class CameraView: UIView {
     captureSession.addOutput(movieOutput!)
     if videoDeviceInput!.device.position == .front {
         movieOutput!.mirror()
-    }
-
-    // Barcode Scanning
-    if let metadataOutput = self.metadataOutput {
-      captureSession.removeOutput(metadataOutput)
-    }
-    if let scannableCodes = self.scannableCodes {
-      // scannableCodes prop is not nil, so enable barcode scanning.
-      guard onCodeScanned != nil else {
-        return invokeOnError(.parameter(.invalidCombination(provided: "scannableCodes", missing: "onCodeScanned")))
-      }
-      metadataOutput = AVCaptureMetadataOutput()
-      guard captureSession.canAddOutput(metadataOutput!) else {
-        return invokeOnError(.parameter(.unsupportedOutput(outputDescriptor: "metadata-output")))
-      }
-      captureSession.addOutput(metadataOutput!)
-      metadataOutput!.setMetadataObjectsDelegate(self, queue: queue)
-      var objectTypes: [AVMetadataObject.ObjectType] = []
-      scannableCodes.forEach { code in
-        do {
-          objectTypes.append(try AVMetadataObject.ObjectType(withString: code))
-        } catch let EnumParserError.unsupportedOS(supportedOnOS: os) {
-          invokeOnError(.parameter(.unsupportedOS(unionName: "CodeType", receivedValue: code, supportedOnOs: os)))
-        } catch {
-          invokeOnError(.parameter(.invalid(unionName: "CodeType", receivedValue: code)))
-        }
-      }
-      metadataOutput!.metadataObjectTypes = objectTypes
     }
 
     ReactLogger.log(level: .info, message: "Camera initialized!")
