@@ -25,7 +25,7 @@ import UIKit
 // CameraView+TakePhoto
 // TODO: Photo HDR
 
-private let propsThatRequireReconfiguration = ["cameraId", "enableDepthData", "enableHighResolutionCapture", "enablePortraitEffectsMatteDelivery", "preset"]
+private let propsThatRequireReconfiguration = ["cameraId", "enableDepthData", "enableHighResolutionCapture", "enablePortraitEffectsMatteDelivery", "preset", "frameProcessor"]
 private let propsThatRequireDeviceReconfiguration = ["fps", "hdr", "lowLightBoost", "colorSpace"]
 
 public class CameraView: UIView {
@@ -58,8 +58,6 @@ public class CameraView: UIView {
       }
     }
   }
-  // frame processor jsi::Function (converted to objc callback)
-  @objc public var frameProcessor: (([Any]) -> Void)?
 
   var isReady: Bool = false
   var isRunning: Bool {
@@ -74,7 +72,7 @@ public class CameraView: UIView {
   internal var audioDeviceInput: AVCaptureDeviceInput?
   internal var photoOutput: AVCapturePhotoOutput?
   internal var movieOutput: AVCaptureMovieFileOutput?
-  internal var metadataOutput: AVCaptureMetadataOutput?
+  internal var frameProcessorOutput: AVCaptureVideoDataOutput?
   // CameraView+TakePhoto
   internal var photoCaptureDelegates: [PhotoCaptureDelegate] = []
   // CameraView+RecordVideo
@@ -83,6 +81,13 @@ public class CameraView: UIView {
   // CameraView+Zoom
   internal var pinchGestureRecognizer: UIPinchGestureRecognizer?
   internal var pinchScaleOffset: CGFloat = 1.0
+  // CameraView+FrameProcessor
+  @objc public var frameProcessor: (([Any]) -> Void)? {
+    didSet {
+      self.didSetProps(["frameProcessor"])
+    }
+  }
+  internal let frameProcessorQueue = DispatchQueue(label: "com.mrousavy.camera-queue-frame-processor", qos: .userInteractive, attributes: [], autoreleaseFrequency: .inherit, target: nil)
 
   // pragma MARK: Setup
   public override class var layerClass: AnyClass {
@@ -244,6 +249,7 @@ public class CameraView: UIView {
     do {
       if let videoDeviceInput = self.videoDeviceInput {
         captureSession.removeInput(videoDeviceInput)
+        self.videoDeviceInput = nil
       }
       guard let videoDevice = AVCaptureDevice(uniqueID: cameraId) else {
         return invokeOnError(.device(.invalid))
@@ -262,6 +268,7 @@ public class CameraView: UIView {
     do {
       if let audioDeviceInput = self.audioDeviceInput {
         captureSession.removeInput(audioDeviceInput)
+        self.audioDeviceInput = nil
       }
       guard let audioDevice = AVCaptureDevice.default(for: .audio) else {
         return invokeOnError(.device(.microphoneUnavailable))
@@ -279,6 +286,7 @@ public class CameraView: UIView {
     // OUTPUTS
     if let photoOutput = self.photoOutput {
       captureSession.removeOutput(photoOutput)
+      self.photoOutput = nil
     }
     // Photo Output
     photoOutput = AVCapturePhotoOutput()
@@ -300,6 +308,7 @@ public class CameraView: UIView {
     // Video Output
     if let movieOutput = self.movieOutput {
       captureSession.removeOutput(movieOutput)
+      self.movieOutput = nil
     }
     movieOutput = AVCaptureMovieFileOutput()
     guard captureSession.canAddOutput(movieOutput!) else {
@@ -308,6 +317,20 @@ public class CameraView: UIView {
     captureSession.addOutput(movieOutput!)
     if videoDeviceInput!.device.position == .front {
         movieOutput!.mirror()
+    }
+    
+    // Frame Processor (also Video Output)
+    if let frameProcessorOutput = self.frameProcessorOutput {
+      captureSession.removeOutput(frameProcessorOutput)
+      self.frameProcessorOutput = nil
+    }
+    if self.frameProcessor != nil {
+      frameProcessorOutput = AVCaptureVideoDataOutput()
+      guard captureSession.canAddOutput(frameProcessorOutput!) else {
+        return invokeOnError(.parameter(.unsupportedOutput(outputDescriptor: "frame-processor-output")))
+      }
+      frameProcessorOutput!.setSampleBufferDelegate(self, queue: self.frameProcessorQueue)
+      captureSession.addOutput(frameProcessorOutput!)
     }
 
     ReactLogger.log(level: .info, message: "Camera initialized!")
