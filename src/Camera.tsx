@@ -433,6 +433,11 @@ export class Camera extends React.PureComponent<CameraProps, CameraState> {
     return null;
   }
 
+  componentWillUnmount(): void {
+    // @ts-expect-error JSI functions aren't typed
+    global.unsetFrameProcessor(this.handle);
+  }
+
   public render(): React.ReactNode {
     // We remove the big `device` object from the props because we only need to pass `cameraId` to native.
     const { device: _, frameProcessor, ...props } = this.props;
