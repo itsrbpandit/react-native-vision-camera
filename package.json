@@ -1,6 +1,6 @@
 {
   "name": "react-native-vision-camera",
-  "version": "1.0.0-alpha.5",
+  "version": "1.0.0-alpha.6",
   "description": "The Camera library that sees the vision.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -34,16 +34,29 @@
     "release": "release-it",
     "example": "yarn --cwd example",
     "pods": "cd example && pod-install --quiet",
-    "bootstrap": "yarn example && yarn && yarn pods"
+    "bootstrap": "yarn example && yarn && yarn pods",
+    "ktlint-fix": "ktlint -F android/**/*.kt*",
+    "swiftlint-fix": "cd ios && swiftlint autocorrect"
   },
   "keywords": [
     "react-native",
     "ios",
-    "android"
+    "android",
+    "camera",
+    "vision",
+    "native",
+    "module",
+    "cuvent",
+    "react",
+    "ai",
+    "ar",
+    "qr",
+    "qr-code",
+    "scanner"
   ],
   "repository": "https://github.com/mrousavy/react-native-vision-camera",
   "author": "Marc Rousavy <marcrousavy@hotmail.com> (https://github.com/mrousavy)",
-  "license": "GPL-3.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/mrousavy/react-native-vision-camera/issues"
   },
