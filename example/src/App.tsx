@@ -13,7 +13,14 @@ import type { CameraDevice, CameraDeviceFormat, CameraProps, CameraRuntimeError,
 import { Camera, frameRateIncluded, sortDevices, sortFormatsByResolution, filterFormatsByAspectRatio } from 'react-native-vision-camera';
 import { useIsScreenFocused } from './hooks/useIsScreenFocused';
 import { CONTENT_SPACING, MAX_ZOOM_FACTOR, SAFE_AREA_PADDING } from './Constants';
-import Reanimated, { Extrapolate, interpolate, useAnimatedGestureHandler, useAnimatedProps, useSharedValue } from 'react-native-reanimated';
+import Reanimated, {
+  Extrapolate,
+  interpolate,
+  useAnimatedGestureHandler,
+  useAnimatedProps,
+  useSharedValue,
+  useWorkletCallback,
+} from 'react-native-reanimated';
 import { useEffect } from 'react';
 import { useIsForeground } from './hooks/useIsForeground';
 import { StatusBarBlurBackground } from './views/StatusBarBlurBackground';
@@ -230,6 +237,10 @@ export const App: NavigationFunctionComponent = ({ componentId }) => {
     console.log('re-rendering camera page without active camera');
   }
 
+  const frameProcessor = useWorkletCallback((frame) => {
+    console.log(`Frame Processor: ${frame}`);
+  }, []);
+
   // TODO: Implement camera flipping (back <-> front) while recording and stich the videos together
   // TODO: iOS: Use custom video data stream output to manually process the data and write the MOV/MP4 for more customizability.
   return (
@@ -257,6 +268,7 @@ export const App: NavigationFunctionComponent = ({ componentId }) => {
                 // TODO: Remove once https://github.com/software-mansion/react-native-reanimated/pull/1697 gets merged
                 // @ts-expect-error animatedProps should be Partial<P>
                 animatedProps={cameraAnimatedProps}
+                frameProcessor={frameProcessor}
               />
             </TapGestureHandler>
           </Reanimated.View>
