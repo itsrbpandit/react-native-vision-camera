@@ -24,6 +24,13 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class CameraViewModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
+  init {
+    System.loadLibrary("cpp")
+  }
+
+  private external fun installFrameProcessorBindings(jsiPtr: Long)
+  private external fun uninstallFrameProcessorBindings()
+
   companion object {
     const val REACT_CLASS = "CameraView"
     var RequestCode = 10
@@ -39,6 +46,16 @@ class CameraViewModule(reactContext: ReactApplicationContext) : ReactContextBase
 
   override fun getName(): String {
     return REACT_CLASS
+  }
+
+  override fun initialize() {
+    super.initialize()
+    installFrameProcessorBindings(reactApplicationContext.catalystInstance.javaScriptContextHolder.get())
+  }
+
+  override fun onCatalystInstanceDestroy() {
+    super.onCatalystInstanceDestroy()
+    uninstallFrameProcessorBindings()
   }
 
   private fun findCameraView(id: Int): CameraView = reactApplicationContext.currentActivity?.findViewById(id) ?: throw ViewNotFoundError(id)
