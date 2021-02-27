@@ -326,11 +326,13 @@ public final class CameraView: UIView {
       self.frameProcessorOutput = nil
     }
     if let frameProcessorDelegate = self.frameProcessorDelegate {
+      ReactLogger.log(level: .info, message: "Adding Frame Processor output...")
       frameProcessorOutput = AVCaptureVideoDataOutput()
       guard captureSession.canAddOutput(frameProcessorOutput!) else {
         return invokeOnError(.parameter(.unsupportedOutput(outputDescriptor: "frame-processor-output")))
       }
       frameProcessorOutput!.setSampleBufferDelegate(frameProcessorDelegate, queue: frameProcessorDelegate.dispatchQueue)
+      frameProcessorOutput!.alwaysDiscardsLateVideoFrames = true
       captureSession.addOutput(frameProcessorOutput!)
     }
 
