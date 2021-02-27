@@ -306,6 +306,7 @@ public final class CameraView: UIView {
         photoOutput!.mirror()
     }
 
+    // TODO: AVFoundation limitation; I cannot use movieOutput and frameProcessorOutput together. Should I let them share a VideoDataOutput instance?
     // Video Output
     if let movieOutput = self.movieOutput {
       captureSession.removeOutput(movieOutput)
