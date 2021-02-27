@@ -84,15 +84,8 @@ public final class CameraView: UIView {
   internal var pinchScaleOffset: CGFloat = 1.0
 
   // Frame Processing
-  // swiftlint:disable weak_delegate
-  internal var frameProcessorDelegate: FrameProcessorDelegate?
-  @objc public var frameProcessor: FrameProcessor? {
+  @objc public var frameProcessorDelegate: FrameProcessorDelegate? {
     didSet {
-      if let frameProcessor = self.frameProcessor {
-        self.frameProcessorDelegate = FrameProcessorDelegate(withFrameProcessor: frameProcessor)
-      } else {
-        self.frameProcessorDelegate = nil
-      }
       self.didSetProps(["frameProcessor"])
     }
   }
@@ -337,7 +330,7 @@ public final class CameraView: UIView {
       guard captureSession.canAddOutput(frameProcessorOutput!) else {
         return invokeOnError(.parameter(.unsupportedOutput(outputDescriptor: "frame-processor-output")))
       }
-      frameProcessorOutput!.setSampleBufferDelegate(frameProcessorDelegate, queue: frameProcessorDelegate.queue)
+      frameProcessorOutput!.setSampleBufferDelegate(frameProcessorDelegate, queue: frameProcessorDelegate.dispatchQueue)
       captureSession.addOutput(frameProcessorOutput!)
     }
 
