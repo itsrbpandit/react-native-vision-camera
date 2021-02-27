@@ -13,5 +13,6 @@
 #import <React/RCTViewManager.h>
 #import <React/RCTUIManager.h>
 #import "Frame Processor/FrameProcessorDelegate.h"
+#import "Frame Processor/FrameProcessorBindings.h"
 
 #endif /* CameraBridge_h */

@@ -23,6 +23,12 @@ final class CameraViewManager: RCTViewManager {
   override var methodQueue: DispatchQueue! {
     return DispatchQueue.main
   }
+  
+  override var bridge: RCTBridge! {
+    didSet {
+      FrameProcessorBindings.installFrameProcessorBindings(bridge)
+    }
+  }
 
   private func getCameraView(withTag tag: NSNumber) -> CameraView {
     // swiftlint:disable force_cast
