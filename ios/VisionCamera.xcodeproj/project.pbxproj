@@ -139,7 +139,7 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
-				B8DCF2D725EA940700EA5C72 /* FrameProcessor */,
+				B8DCF2D725EA940700EA5C72 /* Frame Processor */,
 				B8DCF1B225EA84D900EA5C72 /* Vision */,
 				B8E0A9B925E833C8008AE93F /* JSI Utils */,
 				B887515E25E0102000DB86D6 /* CameraBridge.h */,
@@ -155,7 +155,7 @@
 				B887516125E0102000DB86D6 /* Extensions */,
 				B887517225E0102000DB86D6 /* Parsers */,
 				B887515C25E0102000DB86D6 /* PhotoCaptureDelegate.swift */,
-				B887516D25E0102000DB86D6 /* React Helper */,
+				B887516D25E0102000DB86D6 /* React Helpers */,
 				B887516025E0102000DB86D6 /* VideoCaptureDelegate.swift */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
@@ -178,14 +178,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		B887516D25E0102000DB86D6 /* React Helper */ = {
+		B887516D25E0102000DB86D6 /* React Helpers */ = {
 			isa = PBXGroup;
 			children = (
 				B887516E25E0102000DB86D6 /* MakeReactError.swift */,
 				B887516F25E0102000DB86D6 /* ReactLogger.swift */,
 				B887517025E0102000DB86D6 /* Promise.swift */,
 			);
-			path = "React Helper";
+			path = "React Helpers";
 			sourceTree = "<group>";
 		};
 		B887517225E0102000DB86D6 /* Parsers */ = {
@@ -232,7 +232,7 @@
 			path = Vision;
 			sourceTree = "<group>";
 		};
-		B8DCF2D725EA940700EA5C72 /* FrameProcessor */ = {
+		B8DCF2D725EA940700EA5C72 /* Frame Processor */ = {
 			isa = PBXGroup;
 			children = (
 				B8E0A94725E82E40008AE93F /* FrameProcessorBindings.h */,
@@ -240,7 +240,7 @@
 				B8DCF31425EA94F800EA5C72 /* FrameProcessorDelegate.h */,
 				B8DCF31125EA94F000EA5C72 /* FrameProcessorDelegate.mm */,
 			);
-			path = FrameProcessor;
+			path = "Frame Processor";
 			sourceTree = "<group>";
 		};
 		B8E0A9B925E833C8008AE93F /* JSI Utils */ = {
