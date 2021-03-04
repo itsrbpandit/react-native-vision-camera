@@ -1,5 +1,5 @@
 <div>
-  <img align="right" width="35%" src="./../img/example.png">
+  <img align="right" width="35%" src="../docs/static/img/example.png">
 
   <h1>Vison Camera playground</h1>
 
@@ -10,9 +10,11 @@
 
   * Photo capture
   * Video capture
+  * Flipping device (back camera <-> front camera)
   * Device filtering (ultra-wide-angle, wide-angle, telephoto, or even combined virtual multi-cameras)
   * Format filtering (targeting 60 FPS, best capture size, best matching aspect ratio, etc.)
   * Zooming using [react-native-gesture-handler](https://github.com/software-mansion/react-native-gesture-handler) and [react-native-reanimated](https://github.com/software-mansion/react-native-reanimated)
+  * Smoothly switching between constituent camera devices (see [demo on my Twitter](https://twitter.com/mrousavy/status/1365267563375116292))
   * HDR mode
   * Night mode
   * Flash for photo capture
@@ -26,7 +28,7 @@
 To try the playground out for yourself, run the following commands:
 
 ```sh
-git clone https://github.com/mrousavy/react-native-vision-camera
+git clone https://github.com/cuvent/react-native-vision-camera
 cd react-native-vision-camera
 yarn bootstrap
 ```

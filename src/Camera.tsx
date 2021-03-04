@@ -83,7 +83,11 @@ export type CameraDeviceProps = {
 
 export type CameraDynamicProps = {
   /**
-   * `true` enables streaming from the camera's input stream, `false` "pauses" the camera input stream.
+   * Whether the Camera should actively stream video frames, or not.
+   *
+   * This can be compared to a Video component, where `isActive` specifies whether the video is paused or not.
+   *
+   * > Note: If you fully unmount the `<Camera>` component instead of using `isActive={false}`, the Camera will take a bit longer to start again. In return, it will use less resources since the Camera will be completely destroyed when unmounted.
    */
   isActive: boolean;
   /**
@@ -152,6 +156,30 @@ type RefType = React.Component<CameraProps> & Readonly<NativeMethods>;
 
 /**
  * ### A powerful `<Camera>` component.
+ *
+ * The `<Camera>` component's most important (and therefore _required_) properties are:
+ *
+ * * `device`: Specifies the {@link CameraDevice} to use. Get a {@link CameraDevice} by using the {@link useCameraDevices} hook, or manually by using the {@link Camera.getAvailableCameraDevices} function.
+ * * `isActive`: A boolean value that specifies whether the Camera should actively stream video frames or not. This can be compared to a Video component, where `isActive` specifies whether the video is paused or not. If you fully unmount the `<Camera>` component instead of using `isActive={false}`, the Camera will take a bit longer to start again.
+ *
+ * @example
+ * ```jsx
+ * function App() {
+ *   const devices = useCameraDevices('wide-angle-camera')
+ *   const device = devices.back
+ *
+ *   if (device == null) return <LoadingView />
+ *   return (
+ *     <Camera
+ *       style={StyleSheet.absoluteFill}
+ *       device={device}
+ *       isActive={true}
+ *     />
+ *   )
+ * }
+ * ```
+ *
+ * @component
  */
 export class Camera extends React.PureComponent<CameraProps, CameraState> {
   static displayName = 'Camera';
@@ -220,6 +248,7 @@ export class Camera extends React.PureComponent<CameraProps, CameraState> {
    * @throws {CameraCaptureError} When any kind of error occured. Use the `CameraCaptureError.code` property to get the actual error
    *
    * @example
+   * ```js
    * camera.current.startRecording({
    *   onRecordingFinished: (video) => console.log(video),
    *   onRecordingError: (error) => console.error(error),
@@ -227,6 +256,7 @@ export class Camera extends React.PureComponent<CameraProps, CameraState> {
    * setTimeout(() => {
    *   camera.current.stopRecording()
    * }, 5000)
+   * ```
    */
   public startRecording(options: RecordVideoOptions): void {
     const { onRecordingError, onRecordingFinished, ...passThroughOptions } = options;
@@ -248,10 +278,12 @@ export class Camera extends React.PureComponent<CameraProps, CameraState> {
    * Stop the current video recording.
    *
    * @example
+   * ```js
    * await camera.current.startRecording()
    * setTimeout(async () => {
    *  const video = await camera.current.stopRecording()
    * }, 5000)
+   * ```
    */
   public async stopRecording(): Promise<void> {
     try {
@@ -263,7 +295,7 @@ export class Camera extends React.PureComponent<CameraProps, CameraState> {
 
   /**
    * Focus the camera to a specific point in the coordinate system.
-   * @param point The point to focus to. This should be relative to the Camera view's coordinate system,
+   * @param {Point} point The point to focus to. This should be relative to the Camera view's coordinate system,
    * and expressed in Pixel on iOS and Points on Android.
    *  * `(0, 0)` means **top left**.
    *  * `(CameraView.width, CameraView.height)` means **bottom right**.

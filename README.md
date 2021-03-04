@@ -1,27 +1,13 @@
-<table>
-<tr>
-<th>README</th>
-<th><a href="./docs/SETUP.md">SETUP</a></th>
-<th><a href="./docs/DEVICES.md">DEVICES</a></th>
-<th><a href="./docs/FORMATS.md">FORMATS</a></th>
-<th><a href="./docs/FRAME_PROCESSORS.md">FRAME_PROCESSORS</a></th>
-<th><a href="./docs/ANIMATED.md">ANIMATED</a></th>
-<th><a href="./docs/ERRORS.md">ERRORS</a></th>
-</tr>
-</table>
-
-<br/>
-
-<h1 align="center">Camera</h1>
+<h1 align="center">Vision Camera</h1>
 
 <div align="center">
-  <img src="img/11.png" width="50%">
+  <img src="docs/static/img/11.png" width="50%">
   <br />
   <br />
   <blockquote><h4>📸 The Camera library that sees the vision.</h4></blockquote>
   <br />
 
-  <a href="https://cuvent.com"><img height=40 src="./img/cuvent-logo-text.svg"></a>
+  <a href="https://cuvent.com"><img height="40" src="docs/static/img/cuvent-logo-text.svg"></a>
   <br/>
   <span>
     <a align="center" href="https://github.com/mrousavy?tab=followers">
@@ -44,13 +30,19 @@
 <br/>
 
 <div>
-  <img align="right" width="35%" src="./img/example.png">
+  <img align="right" width="35%" src="docs/static/img/example.png">
 </div>
+
+### Documentation
+
+* [Guides](https://cuvent.github.io/react-native-vision-camera/docs/)
+* [API](https://cuvent.github.io/react-native-vision-camera/docs/api)
+* [Example](./example/)
 
 ### Install
 
 ```sh
-npm i react-native-vision-camera@alpha
+npm i react-native-vision-camera
 npx pod-install
 ```
 
@@ -59,7 +51,7 @@ npx pod-install
 * Photo and Video capture
 * Customizable device (`ultra-wide-angle`, `wide-angle`, `telephoto` and virtual multi-cameras)
 * Customizable FPS
-* JS worklet frame processors powered by JSI and Reanimated (WIP [#2](https://github.com/cuvent/react-native-vision-camera/pull/2))
+* JS worklet frame processors powered by JSI and Reanimated (**Work in progress: [#2](https://github.com/cuvent/react-native-vision-camera/pull/2)**)
 * Reanimated zooming
 * HDR & Night modes
 
@@ -73,6 +65,7 @@ function App() {
   const devices = useCameraDevices('wide-angle-camera')
   const device = devices.back
 
+  if (device == null) return <LoadingView />
   return (
     <Camera
       style={StyleSheet.absoluteFill}
@@ -85,4 +78,4 @@ function App() {
 
 <br />
 
-#### 🚀 Get started by [setting up permissions](./docs/SETUP.md)!
+#### 🚀 Get started by [setting up permissions](https://cuvent.github.io/react-native-vision-camera/docs/)!
