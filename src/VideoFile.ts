@@ -46,16 +46,16 @@ export interface RecordVideoOptions {
 
 /**
  * Represents a Video taken by the Camera written to the local filesystem.
+ *
+ * Related: {@linkcode Camera.startRecording | Camera.startRecording()}, {@linkcode Camera.stopRecording | Camera.stopRecording()}
  */
-export type VideoFile = Readonly<
-  TemporaryFile & {
-    /**
-     * Represents the duration of the video, in seconds.
-     */
-    duration: number;
-    /**
-     * Represents the file size of the recorded Video File, in bytes.
-     */
-    size: number;
-  }
->;
+export interface VideoFile extends TemporaryFile {
+  /**
+   * Represents the duration of the video, in seconds.
+   */
+  duration: number;
+  /**
+   * Represents the file size of the recorded Video File, in bytes.
+   */
+  size: number;
+}

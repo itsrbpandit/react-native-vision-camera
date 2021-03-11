@@ -15,12 +15,12 @@ const DefaultCameraDevices: CameraDevices = {
 };
 
 /**
- * Gets the best available `CameraDevice`. Devices with more cameras are preferred.
+ * Gets the best available {@linkcode CameraDevice}. Devices with more cameras are preferred.
  *
- * @returns The best matching `CameraDevice`.
- * @throws `CameraRuntimeError` if no device was found.
+ * @returns The best matching {@linkcode CameraDevice}.
+ * @throws {@linkcode CameraRuntimeError} if no device was found.
  * @example
- * ```jsx
+ * ```tsx
  * const device = useCameraDevice()
  * // ...
  * return <Camera device={device} />
@@ -29,13 +29,13 @@ const DefaultCameraDevices: CameraDevices = {
 export function useCameraDevices(): CameraDevices;
 
 /**
- * Gets a `CameraDevice` for the requested device type.
+ * Gets a {@linkcode CameraDevice} for the requested device type.
  *
  * @param {PhysicalCameraDeviceType | LogicalCameraDeviceType} deviceType Specifies a device type which will be used as a device filter.
- * @returns A `CameraDevice` for the requested device type.
- * @throws `CameraRuntimeError` if no device was found.
+ * @returns A {@linkcode CameraDevice} for the requested device type.
+ * @throws {@linkcode CameraRuntimeError} if no device was found.
  * @example
- * ```jsx
+ * ```tsx
  * const device = useCameraDevice('wide-angle-camera')
  * // ...
  * return <Camera device={device} />

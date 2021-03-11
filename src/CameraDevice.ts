@@ -20,7 +20,7 @@ export type PhysicalCameraDeviceType = 'ultra-wide-angle-camera' | 'wide-angle-c
 export type LogicalCameraDeviceType = 'dual-camera' | 'dual-wide-camera' | 'triple-camera' | 'true-depth-camera';
 
 /**
- * Parses an array of physical device types into a single `PhysicalCameraDeviceType` or `LogicalCameraDeviceType`, depending what matches.
+ * Parses an array of physical device types into a single {@linkcode PhysicalCameraDeviceType} or {@linkcode LogicalCameraDeviceType}, depending what matches.
  * @method
  */
 export const parsePhysicalDeviceTypes = (physicalDeviceTypes: PhysicalCameraDeviceType[]): PhysicalCameraDeviceType | LogicalCameraDeviceType => {
@@ -74,15 +74,15 @@ export type AutoFocusSystem = 'contrast-detection' | 'phase-detection' | 'none';
  */
 export type VideoStabilizationMode = 'off' | 'standard' | 'cinematic' | 'cinematic-extended' | 'auto';
 
-export type FrameRateRange = Readonly<{
+export interface FrameRateRange {
   minFrameRate: number;
   maxFrameRate: number;
-}>;
+}
 
 /**
- * A Camera Device's video format. Do not create instances of this type yourself, only use `Camera.getAvailableCameraDevices(...)`.
+ * A Camera Device's video format. Do not create instances of this type yourself, only use {@linkcode Camera.getAvailableCameraDevices | Camera.getAvailableCameraDevices()}.
  */
-export type CameraDeviceFormat = Readonly<{
+export interface CameraDeviceFormat {
   /**
    * The height of the highest resolution a still image (photo) can be produced in
    */
@@ -151,12 +151,12 @@ export type CameraDeviceFormat = Readonly<{
    * All supported video stabilization modes
    */
   videoStabilizationModes: VideoStabilizationMode[];
-}>;
+}
 
 /**
- * Represents a camera device discovered by the `Camera.getAvailableCameraDevices()` function
+ * Represents a camera device discovered by the {@linkcode Camera.getAvailableCameraDevices | Camera.getAvailableCameraDevices()} function
  */
-export type CameraDevice = Readonly<{
+export interface CameraDevice {
   /**
    * The native ID of the camera device instance.
    */
@@ -212,7 +212,9 @@ export type CameraDevice = Readonly<{
    */
   neutralZoom: number;
   /**
-   * All available formats for this camera device. Use this to find the best format for your use case and set it to the Camera's `format` property.
+   * All available formats for this camera device. Use this to find the best format for your use case and set it to the Camera's {@linkcode Camera.format} property.
+   *
+   * See [the Camera Formats documentation](https://cuvent.github.io/react-native-vision-camera/docs/formats) for more information about Camera Formats.
    */
   formats: CameraDeviceFormat[];
   /**
@@ -230,4 +232,4 @@ export type CameraDevice = Readonly<{
   //  * Whether this camera supports taking photos in RAW format
   //  */
   // supportsRawCapture: boolean;
-}>;
+}

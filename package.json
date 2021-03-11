@@ -1,6 +1,6 @@
 {
   "name": "react-native-vision-camera",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The Camera library that sees the vision.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -37,8 +37,9 @@
     "example": "yarn --cwd example",
     "pods": "cd example && pod-install --quiet",
     "bootstrap": "yarn example && yarn && yarn pods",
-    "ktlint-fix": "ktlint -F android/**/*.kt*",
-    "swiftlint-fix": "cd ios && swiftlint autocorrect",
+    "check-android": "scripts/ktlint.sh",
+    "check-ios": "scripts/swiftformat.sh && scripts/swiftlint.sh",
+    "check-all": "scripts/checkall.sh",
     "docs": "cd docs && yarn build"
   },
   "keywords": [
@@ -68,7 +69,6 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
-    "@firmnav/eslint-github-actions-formatter": "^1.0.1",
     "@react-native-community/eslint-config": "^2.0.0",
     "@react-native-community/eslint-plugin": "^1.1.0",
     "@release-it/conventional-changelog": "^2.0.0",

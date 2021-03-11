@@ -3,8 +3,9 @@ import type { TemporaryFile } from './TemporaryFile';
 
 export interface TakePhotoOptions {
   /**
-   * Specify the photo codec to use. To get a list of available photo codecs use the `getAvailablePhotoCodecs()` function.
+   * Specify the photo codec to use. To get a list of available photo codecs use the {@linkcode Camera.getAvailablePhotoCodecs | getAvailablePhotoCodecs()} function.
    *
+   * @platform iOS
    * @default undefined
    */
   photoCodec?: CameraPhotoCodec;
@@ -51,7 +52,7 @@ export interface TakePhotoOptions {
    */
   enableAutoDistortionCorrection?: boolean;
   /**
-   * When set to `true`, metadata reading and mapping will be skipped. (`PhotoFile.metadata` will be null)
+   * When set to `true`, metadata reading and mapping will be skipped. ({@linkcode PhotoFile.metadata} will be null)
    *
    * This might result in a faster capture, as metadata reading and mapping requires File IO.
    *
@@ -64,75 +65,81 @@ export interface TakePhotoOptions {
 
 /**
  * Represents a Photo taken by the Camera written to the local filesystem.
+ *
+ * Related: {@linkcode Camera.takePhoto | Camera.takePhoto()}, {@linkcode Camera.takeSnapshot | Camera.takeSnapshot()}
  */
-export type PhotoFile = Readonly<
-  TemporaryFile & {
-    width: number;
-    height: number;
-    isRawPhoto: boolean;
-    thumbnail?: Record<string, unknown>;
-    metadata: {
-      Orientation: number;
+export interface PhotoFile extends TemporaryFile {
+  width: number;
+  height: number;
+  isRawPhoto: boolean;
+  thumbnail?: Record<string, unknown>;
+  /**
+   * Metadata information describing the captured image.
+   *
+   * @see [AVCapturePhoto.metadata](https://developer.apple.com/documentation/avfoundation/avcapturephoto/2873982-metadata)
+   * @see [AndroidX ExifInterface](https://developer.android.com/reference/androidx/exifinterface/media/ExifInterface)
+   */
+  metadata: {
+    Orientation: number;
+    /**
+     * @platform iOS
+     */
+    DPIHeight: number;
+    /**
+     * @platform iOS
+     */
+    DPIWidth: number;
+    /**
+     * Represents any data Apple cameras write to the metadata
+     *
+     * @platform iOS
+     */
+    '{MakerApple}'?: Record<string, unknown>;
+    '{TIFF}': {
+      ResolutionUnit: number;
+      Software: string;
+      Make: string;
+      DateTime: string;
+      XResolution: number;
       /**
        * @platform iOS
        */
-      DPIHeight: number;
-      /**
-       * @platform iOS
-       */
-      DPIWidth: number;
-      /**
-       * Represents any data Apple cameras write to the metadata
-       *
-       * @platform iOS
-       */
-      '{MakerApple}'?: Record<string, unknown>;
-      '{TIFF}': {
-        ResolutionUnit: number;
-        Software: string;
-        Make: string;
-        DateTime: string;
-        XResolution: number;
-        /**
-         * @platform iOS
-         */
-        HostComputer?: string;
-        Model: string;
-        YResolution: number;
-      };
-      '{Exif}': {
-        DateTimeOriginal: string;
-        ExposureTime: number;
-        FNumber: number;
-        LensSpecification: number[];
-        ExposureBiasValue: number;
-        ColorSpace: number;
-        FocalLenIn35mmFilm: number;
-        BrightnessValue: number;
-        ExposureMode: number;
-        LensModel: string;
-        SceneType: number;
-        PixelXDimension: number;
-        ShutterSpeedValue: number;
-        SensingMethod: number;
-        SubjectArea: number[];
-        ApertureValue: number;
-        SubsecTimeDigitized: string;
-        FocalLength: number;
-        LensMake: string;
-        SubsecTimeOriginal: string;
-        OffsetTimeDigitized: string;
-        PixelYDimension: number;
-        ISOSpeedRatings: number[];
-        WhiteBalance: number;
-        DateTimeDigitized: string;
-        OffsetTimeOriginal: string;
-        ExifVersion: string;
-        OffsetTime: string;
-        Flash: number;
-        ExposureProgram: number;
-        MeteringMode: number;
-      };
+      HostComputer?: string;
+      Model: string;
+      YResolution: number;
     };
-  }
->;
+    '{Exif}': {
+      DateTimeOriginal: string;
+      ExposureTime: number;
+      FNumber: number;
+      LensSpecification: number[];
+      ExposureBiasValue: number;
+      ColorSpace: number;
+      FocalLenIn35mmFilm: number;
+      BrightnessValue: number;
+      ExposureMode: number;
+      LensModel: string;
+      SceneType: number;
+      PixelXDimension: number;
+      ShutterSpeedValue: number;
+      SensingMethod: number;
+      SubjectArea: number[];
+      ApertureValue: number;
+      SubsecTimeDigitized: string;
+      FocalLength: number;
+      LensMake: string;
+      SubsecTimeOriginal: string;
+      OffsetTimeDigitized: string;
+      PixelYDimension: number;
+      ISOSpeedRatings: number[];
+      WhiteBalance: number;
+      DateTimeDigitized: string;
+      OffsetTimeOriginal: string;
+      ExifVersion: string;
+      OffsetTime: string;
+      Flash: number;
+      ExposureProgram: number;
+      MeteringMode: number;
+    };
+  };
+}

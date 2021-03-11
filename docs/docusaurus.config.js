@@ -9,11 +9,15 @@ module.exports = {
   organizationName: 'cuvent',
   projectName: 'react-native-vision-camera',
   themeConfig: {
+    algolia: {
+      apiKey: 'ab7f44570bb62d0e07c0f7d92312ed1a',
+      indexName: 'react-native-vision-camera',
+    },
     navbar: {
       title: 'VisionCamera',
       logo: {
         alt: 'Logo',
-        src: './img/11.png',
+        src: './android-chrome-192x192.png',
       },
       items: [
         {
@@ -82,6 +86,10 @@ module.exports = {
               label: 'GitHub',
               href: 'https://github.com/cuvent/react-native-vision-camera',
             },
+            {
+              label: 'Cuvent',
+              href: 'https://cuvent.com',
+            },
           ],
         },
       ],
@@ -108,9 +116,14 @@ module.exports = {
     [
       'docusaurus-plugin-typedoc',
       {
+        name: 'VisionCamera',
         entryPoints: ['../src'],
         exclude: "../src/index.ts",
         tsconfig: '../tsconfig.docs.json',
+        excludePrivate: true,
+        excludeProtected: true,
+        excludeExternals: true,
+        excludeInternal: true,
         readme: "none",
         sidebar: {
           sidebarFile: 'typedoc-sidebar.js',

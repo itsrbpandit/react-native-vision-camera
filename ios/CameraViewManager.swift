@@ -11,17 +11,15 @@ import Foundation
 
 @objc(CameraViewManager)
 final class CameraViewManager: RCTViewManager {
-  // pragma MARK: Setup
-  override final func view() -> UIView! {
-    return CameraView()
-  }
+  // MARK: Lifecycle
 
   override static func requiresMainQueueSetup() -> Bool {
     return true
   }
 
-  override var methodQueue: DispatchQueue! {
-    return DispatchQueue.main
+  // pragma MARK: Setup
+  override final func view() -> UIView! {
+    return CameraView()
   }
 
   override var bridge: RCTBridge! {
@@ -33,6 +31,12 @@ final class CameraViewManager: RCTViewManager {
   private func getCameraView(withTag tag: NSNumber) -> CameraView {
     // swiftlint:disable force_cast
     return bridge.uiManager.view(forReactTag: tag) as! CameraView
+  }
+
+  // MARK: Internal
+
+  override var methodQueue: DispatchQueue! {
+    return DispatchQueue.main
   }
 
   // pragma MARK: Exported Functions
@@ -71,7 +75,7 @@ final class CameraViewManager: RCTViewManager {
       guard let movieOutput = component.movieOutput else {
         throw CameraError.session(SessionError.cameraNotReady)
       }
-      return movieOutput.availableVideoCodecTypes.map { $0.descriptor }
+      return movieOutput.availableVideoCodecTypes.map(\.descriptor)
     }
   }
 
@@ -82,24 +86,8 @@ final class CameraViewManager: RCTViewManager {
       guard let photoOutput = component.photoOutput else {
         throw CameraError.session(SessionError.cameraNotReady)
       }
-      return photoOutput.availablePhotoCodecTypes.map { $0.descriptor }
+      return photoOutput.availablePhotoCodecTypes.map(\.descriptor)
     }
-  }
-
-  private final func getAllDeviceTypes() -> [AVCaptureDevice.DeviceType] {
-    var deviceTypes: [AVCaptureDevice.DeviceType] = []
-    if #available(iOS 13.0, *) {
-      deviceTypes.append(.builtInTripleCamera)
-      deviceTypes.append(.builtInDualWideCamera)
-      deviceTypes.append(.builtInUltraWideCamera)
-    }
-    if #available(iOS 11.1, *) {
-      deviceTypes.append(.builtInTrueDepthCamera)
-    }
-    deviceTypes.append(.builtInDualCamera)
-    deviceTypes.append(.builtInWideAngleCamera)
-    deviceTypes.append(.builtInTelephotoCamera)
-    return deviceTypes
   }
 
   // pragma MARK: View Manager funcs
@@ -110,7 +98,7 @@ final class CameraViewManager: RCTViewManager {
       return discoverySession.devices.map {
         return [
           "id": $0.uniqueID,
-          "devices": $0.physicalDevices.map { $0.deviceType.descriptor },
+          "devices": $0.physicalDevices.map(\.deviceType.descriptor),
           "position": $0.position.descriptor,
           "name": $0.localizedName,
           "hasFlash": $0.hasFlash,
@@ -160,5 +148,23 @@ final class CameraViewManager: RCTViewManager {
       let result: AVAuthorizationStatus = granted ? .authorized : .denied
       resolve(result.descriptor)
     }
+  }
+
+  // MARK: Private
+
+  private final func getAllDeviceTypes() -> [AVCaptureDevice.DeviceType] {
+    var deviceTypes: [AVCaptureDevice.DeviceType] = []
+    if #available(iOS 13.0, *) {
+      deviceTypes.append(.builtInTripleCamera)
+      deviceTypes.append(.builtInDualWideCamera)
+      deviceTypes.append(.builtInUltraWideCamera)
+    }
+    if #available(iOS 11.1, *) {
+      deviceTypes.append(.builtInTrueDepthCamera)
+    }
+    deviceTypes.append(.builtInDualCamera)
+    deviceTypes.append(.builtInWideAngleCamera)
+    deviceTypes.append(.builtInTelephotoCamera)
+    return deviceTypes
   }
 }
