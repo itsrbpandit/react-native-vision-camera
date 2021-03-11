@@ -3830,10 +3830,10 @@ dns-txt@^2.0.2:
   dependencies:
     buffer-indexof "^1.0.0"
 
-docusaurus-plugin-typedoc@^0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/docusaurus-plugin-typedoc/-/docusaurus-plugin-typedoc-0.10.0.tgz#64cdbed26efa29c39a91b9db277e45d3d5eb3c61"
-  integrity sha512-cztkkhJeiZLrGmO4/lI3wLsOqDgJkRwK5WOO+eRko59UP9N3CqTcQoNRDr4ADUO0GZm8jvRT2NBTON5Q1+RVEw==
+docusaurus-plugin-typedoc@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/docusaurus-plugin-typedoc/-/docusaurus-plugin-typedoc-0.11.0.tgz#40603bb46c368e81bb126f2cb059f1be5c0ed8a0"
+  integrity sha512-U4FESmxZNkXXmUlLHiSU5GGzz+DCJsnFauI5puYL22KMTy4CLE6i1kNOpwmHtmfO2XMkAXe3R7YHossOgP0FFg==
 
 dom-converter@^0.2:
   version "0.2.0"
@@ -9760,10 +9760,10 @@ typedoc@^0.20.30:
     shiki "^0.9.2"
     typedoc-default-themes "^0.12.8"
 
-typescript@^4.2.2:
-  version "4.2.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.2.2.tgz#1450f020618f872db0ea17317d16d8da8ddb8c4c"
-  integrity sha512-tbb+NVrLfnsJy3M59lsDgrzWIflR4d4TIUjz+heUnHZwdF7YsrMTKoRERiIvI2lvBG95dfpLxB21WZhys1bgaQ==
+typescript@^4.2.3:
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.2.3.tgz#39062d8019912d43726298f09493d598048c1ce3"
+  integrity sha512-qOcYwxaByStAWrBf4x0fibwZvMRG+r4cQoTjbPtUlrWjBHbmCAww1i448U0GJ+3cNNEtebDteo/cHOR3xJ4wEw==
 
 ua-parser-js@^0.7.18:
   version "0.7.24"
