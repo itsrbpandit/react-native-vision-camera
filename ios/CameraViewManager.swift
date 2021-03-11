@@ -22,18 +22,18 @@ final class CameraViewManager: RCTViewManager {
     return CameraView()
   }
 
-  override var bridge: RCTBridge! {
-    didSet {
-      FrameProcessorBindings.installFrameProcessorBindings(bridge)
-    }
-  }
-
   private func getCameraView(withTag tag: NSNumber) -> CameraView {
     // swiftlint:disable force_cast
     return bridge.uiManager.view(forReactTag: tag) as! CameraView
   }
 
   // MARK: Internal
+
+  override var bridge: RCTBridge! {
+    didSet {
+      FrameProcessorBindings.installFrameProcessorBindings(bridge)
+    }
+  }
 
   override var methodQueue: DispatchQueue! {
     return DispatchQueue.main
