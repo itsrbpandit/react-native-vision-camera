@@ -601,7 +601,7 @@ SPEC CHECKSUMS:
   RNReanimated: 61f37823583ca501d74e3d3930bc17c9ceeebfff
   RNStaticSafeAreaInsets: 6103cf09647fa427186d30f67b0f5163c1ae8252
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
-  VisionCamera: 5ba1c2aef87de81f8317d18305e08086e1ae065a
+  VisionCamera: ba7b241733cc11c0dcc193faeb8bfb54f8563d5e
   Yoga: 3745b5c8e01456f8cfffb5f1257da5f5022f8c5d
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
