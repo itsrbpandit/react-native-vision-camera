@@ -359,6 +359,7 @@ PODS:
     - FBLazyVector
     - FBReactNativeSpec
     - glog
+    - RCT-Folly
     - RCTRequired
     - RCTTypeSafety
     - React
@@ -598,7 +599,7 @@ SPEC CHECKSUMS:
   ReactCommon: e8b7811e75aec2786c1f9cf6b7d5350472e53c22
   ReactNativeNavigation: c6560e35a1b51d2da792f87cce04f36107ee4644
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
-  RNReanimated: 61f37823583ca501d74e3d3930bc17c9ceeebfff
+  RNReanimated: 64f6c5789f82818c07ba3c71864b73619cb23c76
   RNStaticSafeAreaInsets: 6103cf09647fa427186d30f67b0f5163c1ae8252
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   VisionCamera: ba7b241733cc11c0dcc193faeb8bfb54f8563d5e
