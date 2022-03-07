@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
-    "start": "docusaurus start",
+    "start": "TYPEDOC_WATCH=true docusaurus start",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
@@ -12,12 +12,12 @@
     "clear": "docusaurus clear"
   },
   "dependencies": {
-    "@docusaurus/core": "2.0.0-alpha.71",
-    "@docusaurus/preset-classic": "2.0.0-alpha.71",
-    "@mdx-js/react": "^1.6.21",
+    "@docusaurus/core": "^2.0.0-beta.14",
+    "@docusaurus/preset-classic": "^2.0.0-beta.14",
+    "@mdx-js/react": "^1.6.22",
     "clsx": "^1.1.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "browserslist": {
     "production": [
@@ -32,9 +32,9 @@
     ]
   },
   "devDependencies": {
-    "docusaurus-plugin-typedoc": "^0.11.0",
-    "typedoc": "^0.20.30",
-    "typedoc-plugin-markdown": "^3.6.0",
-    "typescript": "^4.2.3"
+    "docusaurus-plugin-typedoc": "^0.16.6",
+    "typedoc": "^0.22.10",
+    "typedoc-plugin-markdown": "^3.11.14",
+    "typescript": "^4.5.4"
   }
 }
