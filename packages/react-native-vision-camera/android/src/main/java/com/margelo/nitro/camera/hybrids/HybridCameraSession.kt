@@ -102,6 +102,7 @@ class HybridCameraSession(
           // Multi Camera Session
           // TODO: In Multi-Cam we cannot use the CameraX `SessionConfig` API, so we cannot use `ConstraintsResolver`!
           //       This effectively means that no special features (FPS, HDR, Stabilization, ...) are supported in multi-cam... :(
+          //       Implement this once CameraX supports it - feature request: https://issuetracker.google.com/issues/470629644
           val allPreparedUseCases = mutableListOf<NativeCameraOutput.PreparedUseCase>()
           val configs =
             connections.map { connection ->
