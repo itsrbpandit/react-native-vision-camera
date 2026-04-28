@@ -17,7 +17,7 @@ if (VisionCamera.supportsMultiCamSessions) {
 }
 ```
 
-### Using multiple Connections
+### Getting Multi-Cam capable CameraDevices
 
 Due to hardware constraints, not every [`CameraDevice`](/api/react-native-vision-camera/hybrid-objects/CameraDevice) can be paired with every other [`CameraDevice`](/api/react-native-vision-camera/hybrid-objects/CameraDevice) - therefore VisionCamera exposes a fixed array of supported combinations via [`CameraDeviceFactory.supportedMultiCamDeviceCombinations`](/api/react-native-vision-camera/hybrid-objects/CameraDeviceFactory#supportedmulticamdevicecombinations) upfront:
 
@@ -39,6 +39,8 @@ if (frontAndBackCombination == null)
 const frontDevice = frontAndBackCombination.find((d) => d.position === 'front')
 const backDevice = frontAndBackCombination.find((d) => d.position === 'back')
 ```
+
+### Using multiple Connections
 
 Then, knowing `frontDevice` and `backDevice` can be used simultaneously in a Multi-Cam session, create the [`CameraSession`](/api/react-native-vision-camera/hybrid-objects/CameraSession), and attach the [`CameraSessionConnection`](/api/react-native-vision-camera/interfaces/CameraSessionConnection)s:
 
