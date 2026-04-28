@@ -76,6 +76,8 @@ await session.start()
 
 Each returned [`CameraController`](/api/react-native-vision-camera/hybrid-objects/CameraController) correlates to the connection at that index - e.g. `frontController` allows zooming/exposure/focus the `frontDevice`, and vice-versa.
 
+### Picture-in-Picture Multi-Previews
+
 Then, ensure you display both `frontPreviewOutput` and `backPreviewOutput` in separate [`<NativePreviewView />`](/api/react-native-vision-camera/views/NativePreviewView) views:
 
 ```tsx
