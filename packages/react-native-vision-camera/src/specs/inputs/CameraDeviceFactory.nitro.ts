@@ -39,7 +39,7 @@ export interface CameraDeviceFactory
    * and a {@linkcode CameraPosition | 'back'} {@linkcode CameraDevice} are
    * supported to be used in a Multi-Cam {@linkcode CameraSession} - in this case,
    * the returned 2D Array looks something like this:
-   * ```
+   * ```json
    * [
    *   [{ position: 'back', ... }, { position: 'front', ... }]
    * ]
