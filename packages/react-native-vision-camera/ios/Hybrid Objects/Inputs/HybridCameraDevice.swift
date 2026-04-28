@@ -58,6 +58,7 @@ final class HybridCameraDevice: HybridCameraDeviceSpec, NativeCameraDevice {
     // TODO: We create a separate struct here because for some reason the nitro-generated
     //       struct `DynamicRange` fails to build when Swift tries to link to `operator==`
     //       for `Equatable` conformance. So we use our own type, then map to the other.
+    //       Remove this workaround when Apple fixes this: https://github.com/swiftlang/swift/issues/88710
     struct ImplDynamicRange: Equatable {
       let bitDepth: DynamicRangeBitDepth
       let colorSpace: ColorSpace
