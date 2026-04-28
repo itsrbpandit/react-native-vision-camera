@@ -169,7 +169,9 @@ describe('VisionCamera - Devices', () => {
       )
       return
     }
-    expect(factory.supportedMultiCamDeviceCombinations.length).toBeGreaterThanOrEqual(1)
+    expect(
+      factory.supportedMultiCamDeviceCombinations.length,
+    ).toBeGreaterThanOrEqual(1)
   })
 
   it('every device in a supportedMultiCamDeviceCombinations combination is also present in cameraDevices', () => {
